@@ -5,50 +5,126 @@ public class LoginGUI {
 
     public LoginGUI() {
 
-        JFrame frame = new JFrame("Login");
-        frame.setSize(350, 250);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new GridLayout(5,1));
+        JFrame frame =
+                new JFrame("Amazon Mini Login");
 
-        JTextField userField = new JTextField();
+        frame.setSize(400, 300);
+
+        frame.setLocationRelativeTo(null);
+
+        frame.setDefaultCloseOperation(
+                JFrame.EXIT_ON_CLOSE
+        );
+
+        frame.setLayout(
+                new BorderLayout(10,10)
+        );
+
+        // 🟢 TITLE
+        JLabel title =
+                new JLabel("🛒 Login System");
+
+        title.setFont(
+                new Font("Arial",
+                        Font.BOLD,
+                        24)
+        );
+
+        title.setHorizontalAlignment(
+                SwingConstants.CENTER
+        );
+
+        frame.add(title,
+                BorderLayout.NORTH);
+
+        // 🟢 CENTER PANEL
+        JPanel center =
+                new JPanel();
+
+        center.setLayout(
+                new GridLayout(4,1,10,10)
+        );
+
+        center.setBorder(
+                BorderFactory.createEmptyBorder(
+                        20,30,20,30
+                )
+        );
+
+        JTextField userField =
+                new JTextField();
+
         JPasswordField passField =
                 new JPasswordField();
 
-        JButton login = new JButton("Login");
-        JButton register = new JButton("Register");
+        center.add(
+                new JLabel("Username")
+        );
 
-        frame.add(new JLabel("Username"));
-        frame.add(userField);
+        center.add(userField);
 
-        frame.add(new JLabel("Password"));
-        frame.add(passField);
+        center.add(
+                new JLabel("Password")
+        );
 
-        JPanel buttons = new JPanel();
+        center.add(passField);
 
-        buttons.add(login);
-        buttons.add(register);
+        frame.add(center,
+                BorderLayout.CENTER);
 
-        frame.add(buttons);
+        // 🟢 BUTTON PANEL
+        JPanel bottom =
+                new JPanel();
+
+        JButton login =
+                new JButton("Login");
+
+        JButton register =
+                new JButton("Register");
+
+        bottom.add(login);
+        bottom.add(register);
+
+        frame.add(bottom,
+                BorderLayout.SOUTH);
 
         UserService service =
                 new UserService();
 
-        // LOGIN
+        // 🟢 LOGIN
         login.addActionListener(e -> {
 
             String username =
                     userField.getText();
 
             String password =
-                    new String(passField.getPassword());
+                    new String(
+                            passField.getPassword()
+                    );
+
+            if(username.isEmpty()
+                    || password.isEmpty()){
+
+                JOptionPane.showMessageDialog(
+                        frame,
+                        "Please Enter Username & Password"
+                );
+
+                return;
+            }
 
             boolean success =
-                    service.login(username,password);
+                    service.login(
+                            username,
+                            password
+                    );
 
             if(success){
 
-                JOptionPane.showMessageDialog(frame,
-                        "Login Success");
+                JOptionPane.showMessageDialog(
+                        frame,
+                        "Login Success"
+                );
 
                 frame.dispose();
 
@@ -56,24 +132,44 @@ public class LoginGUI {
 
             }else{
 
-                JOptionPane.showMessageDialog(frame,
-                        "Invalid Credentials");
+                JOptionPane.showMessageDialog(
+                        frame,
+                        "Invalid Credentials"
+                );
             }
         });
 
-        // REGISTER
+        // 🟢 REGISTER
         register.addActionListener(e -> {
 
             String username =
                     userField.getText();
 
             String password =
-                    new String(passField.getPassword());
+                    new String(
+                            passField.getPassword()
+                    );
 
-            service.register(username,password);
+            if(username.isEmpty()
+                    || password.isEmpty()){
 
-            JOptionPane.showMessageDialog(frame,
-                    "Registered Successfully");
+                JOptionPane.showMessageDialog(
+                        frame,
+                        "Please Fill All Fields"
+                );
+
+                return;
+            }
+
+            service.register(
+                    username,
+                    password
+            );
+
+            JOptionPane.showMessageDialog(
+                    frame,
+                    "Registered Successfully"
+            );
         });
 
         frame.setVisible(true);
