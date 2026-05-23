@@ -339,38 +339,16 @@ public class EcommerceGUI {
 
         remove.addActionListener(e -> {
 
-            String input =
-                    JOptionPane.showInputDialog(
-                            frame,
-                            "Enter Product ID:"
-                    );
+            cart.removeProduct(p.id);
 
-            if(input != null){
+            area.setText(
+                    cart.viewCart()
+            );
 
-                try{
-
-                    int id =
-                            Integer.parseInt(input);
-
-                    cart.removeProduct(id);
-
-                    area.setText(
-                            cart.viewCart()
-                    );
-
-                    JOptionPane.showMessageDialog(
-                            frame,
-                            "Item Removed"
-                    );
-
-                }catch(Exception ex){
-
-                    JOptionPane.showMessageDialog(
-                            frame,
-                            "Invalid Input"
-                    );
-                }
-            }
+            JOptionPane.showMessageDialog(
+                    frame,
+                    p.name + " Removed"
+            );
         });
 
         // 🟢 REVIEW BUTTON
